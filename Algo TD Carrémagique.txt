@@ -1,0 +1,149 @@
+
+Programme: TD CarréMagique
+
+//BUT: algorithme qui crée un carré magique.
+//ENTREE: Rien.
+//SORTIE: Carré magique.
+
+const
+	taille:entier<--5
+	
+type: Tableau2D=Tableau[1..taille,1..taille] de entier
+	
+
+procedure InitiaTabl Tableau2D(T1:Tableau de entier)
+
+var
+	i,j,compteur,curseurligne,curseurcolonne:entier
+	
+	
+DEBUT	
+	//Initialisation des coordonnées du point de départ et du compteur:
+	
+	curseurligne<-- taille div 2
+	curseurcolonne<-- taille div 2+1
+	compteur<--1
+	
+	//Creation du tableau et initialisation du départ:
+	
+	POUR i DE 1 A taille FAIRE
+		POUR j DE 1 A taille FAIRE
+			T1[i,j]<--0
+		FINPOUR
+	FINPOUR
+	T1[curseurligne,curseurcolonne]<--compteur
+	compteur<--compteur+1
+FIN
+
+
+
+procedure DéplacementDroite Tableau2D(T1:Tableau de entier ; compteur,curseurligne,curseurcolonne:entier)
+
+DEBUT
+	//Teste pour savoir si la case est vide:
+	SI (T1[curseurligne-1,curseurcolonne+1]=0) ALORS
+	
+		//Cas où le curseur est sur la première ligne, correction:
+		SI (curseurligne=1 ET 0<curseurcolonne<taille) ALORS
+			T1[curseurligne+(taille-1),curseurcolonne+1]<--compteur
+			curseurligne<--curseurligne+(taille-1)
+			curseurcolonne<--curseurcolonne+1
+			compteur<--compteur+1
+			
+		FINSI
+			
+		//Cas où le curseur est sur la dernière colonne, correction:	
+		SI (0<curseurligne<taille ET curseurcolonne=1 ) ALORS
+			T1[curseurligne-1,curseurcolonne-(taille-1)]<--compteur
+			curseurligne<--curseurligne-1
+			curseurcolonne<--curseurcolonne-(taille-1)
+			compteur<--compteur+1
+			
+		FINSI
+			
+		//Cas où le curseur est sur la première ligne ET dernière colonne, correction:
+		SI (curseurligne=1 ET curseurcolonne=taille) ALORS
+			T1[curseurligne+(taille-1),curseurcolonne-(taille-1)]<--compteur
+			curseurligne<--curseurligne+(taille-1)
+			curseurcolonne<--curseurcolonne-(taille-1)
+			compteur<--compteur+1
+			
+		FINSI
+	
+	SINON 
+			T1[curseurligne-1,curseurcolonne+1]<--compteur
+			curseurligne<--curseurligne-1
+			curseurcolonne<--curseurcolonne+1
+			compteur<--compteur+1
+			
+	FINSI
+FIN
+
+procedure DéplacementGauche Tableau2D(T1:Tableau de entier ; compteur,curseurligne,curseurcolonne:entier)
+
+DEBUT
+	//Teste pour savoir si la case est pleine:
+	SI (T1[curseurligne-1,curseur+1]<>0) ALORS
+		
+		//Cas où le curseur est sur la première colonne, correction:
+		SI (1<curseurligne<(taille+1) ET curseurcolonne=1) ALORS
+			T1[curseurligne-1,curseurcolonne+(taille-1)]<--compteur
+			curseurligne<--curseurligne-1
+			curseurcolonne<--curseurcolonne+(taille-1)
+			compteur<--compteur+1
+			
+		FINSI
+			
+		//Cas où le curseur est sur la première ligne, correction:
+		SI (curseurligne=1 ET 1<curseurcolonne<taille+1) ALORS
+			T1[curseurligne+(taille-1),curseurcolonne-1]<--compteur
+			curseurligne<--curseurligne+(taille-1)
+			curseurcolonne<--curseurcolonne-1
+			compteur<--compteur+1
+			
+		FINSI
+			
+		//Car où le curseur est sur la première ligne ET colonne, correction:
+		SI (curseurligne=1 ET curseurcolonne=1) ALORS
+			T1[curseurligne+(taille-1),curseurcolonne+(taille-1)]<--compteur
+			curseurligne<--curseurligne+(taille-1)
+			curseurcolonne<--curseurcolonne+(taille-1)
+			compteur<--compteur+1
+			
+		FINSI
+		
+	SINON 
+			T1[curseurligne-1,curseurcolonne-1]<--compteur
+			curseurligne<--curseurligne-1
+			curseurcolonne<--curseurcolonne-1
+			compteur<--compteur+1
+			
+	FINSI
+FIN	
+		
+		
+		
+
+
+//Programme Principal:
+
+var
+	k,i,j:entier
+	
+DEBUT
+	k<--1
+	InitiaTabl
+	POUR k DE 1 A 25 FAIRE
+		DéplacementDroite
+		DéplacementGauche
+	FINPOUR
+	POUR i DE 1 A taille FAIRE
+		POUR j De 1 A taille FAIRE	
+			ECRIRE T1[i,j]
+		FINPOUR
+	FINPOUR
+FIN
+	
+	
+	
+	
